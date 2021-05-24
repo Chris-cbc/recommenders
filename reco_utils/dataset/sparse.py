@@ -180,4 +180,3 @@ class AffinityMatrix:
 
         return out_df
 
-        

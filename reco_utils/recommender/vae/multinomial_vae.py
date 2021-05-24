@@ -314,18 +314,18 @@ class Mult_VAE:
         self.model.compile(optimizer=keras.optimizers.Adam(learning_rate=0.001), loss=self._get_vae_loss)
       
         
-    def _get_vae_loss(self, x, x_bar): 
+    def _get_vae_loss(self, x, x_bar):
         """Calculate negative ELBO (NELBO)."""
         log_softmax_var = tf.nn.log_softmax(x_bar)
-        self.neg_ll = -tf.reduce_mean(tf.reduce_sum(
-            log_softmax_var * x,
+        self.neg_ll = -tf.reduce_mean(input_tensor=tf.reduce_sum(
+            input_tensor=log_softmax_var * x,
             axis=-1))
         a = tf.keras.backend.print_tensor(self.neg_ll)
         # calculate positive Kullback–Leibler divergence  divergence term 
-        kl_loss=  K.mean(0.5 * K.sum(-1 - self.z_log_var + K.square(self.z_mean) + K.exp(self.z_log_var), axis=-1))
-        
+        kl_loss = K.mean(0.5 * K.sum(-1 - self.z_log_var + K.square(self.z_mean) + K.exp(self.z_log_var), axis=-1))
+
         # obtain negative ELBO 
-        neg_ELBO = self.neg_ll +  self.beta * kl_loss
+        neg_ELBO = self.neg_ll + self.beta * kl_loss
 
         return neg_ELBO
 

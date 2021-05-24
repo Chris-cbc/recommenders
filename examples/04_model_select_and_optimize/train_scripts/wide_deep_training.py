@@ -10,7 +10,7 @@ import shutil
 import papermill as pm
 import tensorflow as tf
 
-print("TensorFlow version:", tf.VERSION)
+print("TensorFlow version:", tf.version.VERSION)
 
 try:
     from azureml.core import Run
